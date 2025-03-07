@@ -23,6 +23,8 @@ def get_complex_grid(top_left: complex, bottom_right: complex, step: float) -> n
     top_left_imag = np.imag(top_left)
     bottom_right_real = np.real(bottom_right)
     bottom_right_imag = np.imag(bottom_right)
+    if (top_left_real > bottom_right_real) or (top_left_imag < bottom_right_imag):
+        return np.array([])
     real = np.arange(top_left_real, bottom_right_real, step)
     imag = np.arange(top_left_imag, bottom_right_imag, -step)
     real_coordinate = real.reshape(1, -1)

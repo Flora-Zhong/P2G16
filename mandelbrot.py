@@ -13,12 +13,7 @@ def get_escape_time(c: complex, max_iterations: int) -> int | None:
             return i  # Return number of iterations until escape
 
     return None  # Did not escape within max_iterations
-"""testing code"""
-print(get_escape_time(2+1j, 5))
-print(get_escape_time(1+1j, 10))
-print(get_escape_time(0.5+0.5j, 3))
-print(get_escape_time(0.5+0.5j, 4))
-print(get_escape_time(0.38+0.25j, 100))
+
 
 """PART 2"""
 

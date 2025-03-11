@@ -71,10 +71,10 @@ def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarr
     for i in range(c_arr.shape[0]):
         for j in range(c_arr.shape[1]):
             c = c_arr[i, j]
-            z = 0 + 0j
+            x = 0 + 0j
             t = 0
             while abs(z) <= 2 and t < max_iterations:
-                z = z * z + c
+                x = x * x + c
                 t += 1
             if t == max_iterations:
                 escape_time[i, j] = max_iterations + 1

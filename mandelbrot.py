@@ -48,3 +48,45 @@ def get_complex_grid(top_left: complex, bottom_right: complex, step: float) -> n
     imag_coordinate = imag.reshape(-1, 1)
     grid = real_coordinate + imag_coordinate * 1j
     return grid
+
+"""PART 3"""
+def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarray:
+    """
+
+    Returns an array of the same shape with color values in [0,1] according to the escape time of each c-value.
+
+    Parameters
+    ----------
+    c_arr: np.ndarray
+        The top left corner of the coordinate of this grid.
+    max_iterations: int
+        The bottom right corner of the coordinate of this grid.
+
+    Returns
+    -------
+    np.ndarray, The coordinates of the point.
+
+    """
+    escape_time = np.zeros(c_arr.shape, dtype=int)
+    for i in range(c_arr.shape[0]):
+        for j in range(c_arr.shape[1]):
+            c = c_arr[i, j]
+            z = 0 + 0j
+            t = 0
+            while abs(z) <= 2 and t < max_iterations:
+                z = z * z + c
+                t += 1
+            if t == max_iterations:
+                escape_times[i, j] = max_iterations + 1
+            else:
+                escape_times[i, j] = t
+    result = (max_iterations - escape_times + 1) / (max_iterations + 1)
+    return result
+import mandelbrot
+from matplotlib import pyplot as plt
+
+grid = mandelbrot.get_complex_grid(-2+1.25j, 0.5-1.25j, 0.01)
+colors = mandelbrot.get_escape_time_color_arr(grid, 30)
+
+plt.imshow(colors, cmap="Greys")
+

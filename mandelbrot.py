@@ -67,18 +67,20 @@ def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarr
     np.ndarray, The coordinates of the point.
 
     """
-    escape_time = np.zeros(c_arr.shape, dtype=int)
+    escape_time = np.zeros(c_arr.shape, dtype = int)
+    current_value = np.zeros(c_arr.shape, dtype = complex)
+    num_iterations = np.zeros(c_arr.shape, dtype = int)
     for i in range(c_arr.shape[0]):
         for j in range(c_arr.shape[1]):
             c = c_arr[i, j]
-            x = 0 + 0j
-            t = 0
-            while abs(x) <= 2 and t < max_iterations:
-                x = x * x + c
-                t += 1
-            if t == max_iterations:
+            current_value[i,j] = 0 + 0j
+            num_iterations[i,j] = 0
+            while np.abs(current_value[i,j]) <= 2 and num_iterations[i,j] < max_iterations:
+                current_value[i,j] = current_value[i,j] * current_value[i,j] + c
+                num_iterations[i,j] += 1
+            if num_iterations[i,j] == max_iterations:
                 escape_time[i, j] = max_iterations + 1
             else:
-                escape_time[i, j] = t
+                escape_time[i, j] = num_iterations[i,j]
     result = (max_iterations - escape_time + 1) / (max_iterations + 1)
     return result

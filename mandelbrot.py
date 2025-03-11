@@ -77,16 +77,8 @@ def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarr
                 z = z * z + c
                 t += 1
             if t == max_iterations:
-                escape_times[i, j] = max_iterations + 1
+                escape_time[i, j] = max_iterations + 1
             else:
-                escape_times[i, j] = t
-    result = (max_iterations - escape_times + 1) / (max_iterations + 1)
+                escape_time[i, j] = t
+    result = (max_iterations - escape_time + 1) / (max_iterations + 1)
     return result
-import mandelbrot
-from matplotlib import pyplot as plt
-
-grid = mandelbrot.get_complex_grid(-2+1.25j, 0.5-1.25j, 0.01)
-colors = mandelbrot.get_escape_time_color_arr(grid, 30)
-
-plt.imshow(colors, cmap="Greys")
-

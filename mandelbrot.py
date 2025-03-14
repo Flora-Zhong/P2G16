@@ -84,3 +84,31 @@ def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarr
                 escape_time[i, j] = num_iterations[i,j]
     result = (max_iterations - escape_time + 1) / (max_iterations + 1)
     return result
+
+"""PART 4"""
+import mandelbrot
+from matplotlib import pyplot as plt
+def get_julia_color_arr(grid: np.ndarray, c: complex, max_iterations: int) -> np.ndarray:
+    """
+    Compute escape times for the Julia set of P_c(z) = z^2 + c.
+
+    Parameters:
+        grid (np.ndarray): A 2D array of complex numbers representing the grid.
+        c (complex): The parameter c for the Julia set.
+        max_iterations (int): Maximum number of iterations.
+
+    Returns:
+        np.ndarray: A 2D array of escape times.
+    """
+    z = grid.copy()
+    escape_times = np.full(grid.shape, max_iterations, dtype=int)  # Default to max iterations
+
+    for i in range(max_iterations):
+        z = z**2 + c  # Apply Julia iteration
+        escaped = np.abs(z) > 2  # Check which points escaped
+        for x in range(grid.shape[0]):
+            for y in range(grid.shape[1]):
+                if escaped[x, y] and escape_times[x, y] == max_iterations:
+                    escape_times[x, y] = i  # Assign escape time only once
+
+    return escape_times

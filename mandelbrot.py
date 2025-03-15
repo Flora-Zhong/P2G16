@@ -2,7 +2,22 @@ import numpy as np
 
 """PART 1"""
 def get_escape_time(c: complex, max_iterations: int) -> int | None:
-    """finding the max amount of times c has to go through the mandelbrot set before it escapes"""
+    """
+
+    Finding the max amount of times c has to go through the mandelbrot set before it escapes.
+
+    Parameters
+    ----------
+    c : complex
+        The complex number to calculate the escape time.
+    max_iterations: int
+        The maximum number of iterations.
+
+    Returns
+    -------
+    np.ndarray, The coordinates of the point.
+
+    """
     z = c  # Start at c (as given in assignment)
     if abs(z) > 2:
         return 0  # Escape immediately if magnitude exceeds 2
@@ -52,18 +67,18 @@ def get_complex_grid(top_left: complex, bottom_right: complex, step: float) -> n
 def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarray:
     """
 
-    Returns an array of the same shape with color values in [0,1] according to the escape time of each c-value.
+    Returns an array of the same shape with color values in [0, 1] according to the escape time of each c-value.
 
     Parameters
     ----------
     c_arr: np.ndarray
-        The top left corner of the coordinate of this grid.
+        An array with c-values.
     max_iterations: int
-        The bottom right corner of the coordinate of this grid.
+        The maximum number of iterations.
 
     Returns
     -------
-    np.ndarray, The coordinates of the point.
+    np.ndarray, An array of the same shape with color values in [0, 1] according to the escape time of each c-value.
 
     """
     escape_time = np.zeros(c_arr.shape, dtype = int)
@@ -87,15 +102,20 @@ def get_escape_time_color_arr(c_arr: np.ndarray,max_iterations: int) -> np.ndarr
 """PART 4"""
 def get_julia_color_arr(grid: np.ndarray, c: complex, max_iterations: int) -> np.ndarray:
     """
+
     Compute escape times for the Julia set of P_c(z) = z^2 + c.
 
     Parameters:
-        grid (np.ndarray): A 2D array of complex numbers representing the grid.
-        c (complex): The parameter c for the Julia set.
-        max_iterations (int): Maximum number of iterations.
+        grid: np.ndarray
+            A 2D array of complex numbers representing the grid.
+        c: complex
+            The parameter c for the Julia set.
+        max_iterations: int
+            The maximum number of iterations.
 
     Returns:
         np.ndarray: A 2D array of escape times.
+
     """
     z = grid.copy()
     escape_times = np.zeros(grid.shape, dtype=int)  # Default to max iterations

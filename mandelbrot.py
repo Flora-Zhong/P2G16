@@ -98,14 +98,18 @@ def get_julia_color_arr(grid: np.ndarray, c: complex, max_iterations: int) -> np
         np.ndarray: A 2D array of escape times.
     """
     z = grid.copy()
-    escape_times = np.full(grid.shape, max_iterations, dtype=int)  # Default to max iterations
-    escape_r = np.maximum(abs(c), 2)
-    bool_num = np.ones(z.shape, dtype=bool)
-    for i in range(max_iterations):
-        z[bool_num] = z[bool_num]**2 + c  # Apply Julia iteration
-        escaped = np.abs(z) > escape_r  # Check which points escaped
-        for x in range(grid.shape[0]):
-            for y in range(grid.shape[1]):
-                if escaped[x, y] and escape_times[x, y] == max_iterations:
-                    escape_times[x, y] = i  # Assign escape time only once
-    return escape_times
+    escape_times = np.zeros(grid.shape, dtype=int)  # Default to max iterations
+    escape_radius = np.maximum(abs(c), 2)
+    for i in range(grid.shape[0]):
+        for j in range(grid.shape[1]):
+            current_value = z[i, j]
+            num_iterations = 0
+            while num_iterations < max_iterations and np.abs(current_value) < escape_radius:
+                current_value = current_value ** 2 + c
+                num_iterations += 1
+                if num_iterations < max_iterations:
+                    escape_times[i, j] = num_iterations
+                else:
+                    escape_times[i, j] = max_iterations + 1
+    result = (max_iterations - escape_times + 1) / (max_iterations + 1)
+    return result
